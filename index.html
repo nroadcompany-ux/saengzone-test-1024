@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>생ZONE - TEST 1024</title>
+<style>
+:root{font-family:Pretendard,"Apple SD Gothic Neo",system-ui,sans-serif;color:#1c2d42;background:#edf2f7}
+*{box-sizing:border-box}body{margin:0}.app{max-width:450px;min-height:100vh;margin:0 auto;padding:20px 18px 92px;background:white}
+header{display:flex;align-items:center;justify-content:space-between}.brand{font-weight:800;color:#2167aa;font-size:23px}
+.test{border:1px solid #e6c999;background:#fff0d5;color:#925316;padding:6px 9px;border-radius:8px;font-size:11px;font-weight:800}
+.hero{margin:20px 0;background:linear-gradient(135deg,#e8f2ff,#f6faff);border-radius:19px;padding:23px 18px}
+h1{font-size:23px;margin:0 0 8px}p{margin:0}.hero p{font-size:13px;color:#64768c;margin-bottom:17px}
+.search{width:100%;background:white;border:1px solid #dae5f1;border-radius:12px;padding:13px 14px;font-size:14px}
+.notice{border:1px solid #e7ebf0;background:#f9fafc;color:#657489;padding:12px;border-radius:10px;font-size:12px;margin-bottom:23px}
+section{margin-bottom:27px}h2{font-size:18px;margin:0}.subtitle{color:#8392a5;font-size:12px;margin:6px 0 15px}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px 7px}
+.service{border:0;background:none;color:inherit;display:flex;flex-direction:column;align-items:center;gap:7px;cursor:pointer;padding:0;min-width:0}
+.tile{width:58px;height:58px;background:#f2f5f9;border-radius:17px;display:flex;align-items:center;justify-content:center;font-size:25px}
+section:first-child .tile{background:#eaf2ff}.name{font-size:11px;font-weight:650;line-height:1.3;word-break:keep-all;text-align:center}
+nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);max-width:450px;width:100%;background:white;border-top:1px solid #e8ecf1;display:grid;grid-template-columns:repeat(5,1fr);padding:10px 5px 13px}
+nav button{background:none;border:0;color:#7b899c;font-size:11px;display:flex;flex-direction:column;align-items:center;gap:4px}nav b{font-size:19px}nav button:first-child{color:#2671bd;font-weight:800}
+.dialog{display:none;position:fixed;inset:0;background:#15253b99;align-items:flex-end;justify-content:center}.dialog.open{display:flex}
+.sheet{width:100%;max-width:450px;background:white;padding:25px;border-radius:24px 24px 0 0}.sheet p{font-size:14px;color:#66748a;margin:14px 0}
+.sheet button{width:100%;background:#246ebc;color:white;border:0;border-radius:10px;padding:13px;font-weight:700}
+@media(min-width:750px){.app{margin:24px auto;border-radius:23px;box-shadow:0 15px 65px #15355815;min-height:calc(100vh - 48px)}nav{bottom:24px}}
+</style>
+</head><body>
+<main class="app">
+<header><div class="brand">🌱 생ZONE</div><span class="test">생ZONE - TEST 1024</span></header>
+<div class="hero"><h1>내 가게를 준비해 볼까요?</h1><p>필요한 창업 서비스를 바로 찾아보세요.</p><input id="search" class="search" type="search" placeholder="창업아이템, 자금, 인테리어 검색" aria-label="서비스 검색"/></div>
+<div class="notice">테스트 버전입니다. 실제 상담·신청·고객 데이터·결제에는 연결되지 않습니다.</div>
+<div id="sections"></div>
+</main>
+<nav aria-label="하단 메뉴"><button><b>⌂</b>홈</button><button><b>▤</b>로드맵</button><button><b>◷</b>투데이</button><button><b>◇</b>혜택</button><button><b>♧</b>커뮤니티</button></nav>
+<div id="dialog" class="dialog" role="dialog" aria-modal="true" aria-labelledby="detailTitle"><div class="sheet"><strong id="detailTitle"></strong><p>생ZONE - TEST 1024 검토 화면입니다. 서비스별 실제 URL 및 업무 연계는 승인되지 않았습니다.</p><button id="close">닫기</button></div></div>
+<script>
+const sections=[
+{title:"시작하기",desc:"아이디어부터 창업 계획까지",items:[["💡","창업아이템"],["💰","창업자금"],["🧮","창업예산"],["🏛️","정부지원"],["📈","상권분석"],["🏢","상가·부동산"],["📄","사업자등록"],["🎓","창업교육"]]},
+{title:"매장 만들기",desc:"공간과 시설 준비",items:[["🎨","인테리어"],["📑","비교견적"],["🪧","간판"],["🍳","주방설비"],["🪑","가구·집기"],["💧","정수기"],["🛡️","인허가"],["🛠️","시설·공사"]]},
+{title:"매장 장비",desc:"주문·결제·통신",items:[["🖥️","포스기"],["📱","테이블오더"],["📶","인터넷"],["📹","CCTV"],["💳","카드단말기"],["🧾","키오스크"],["🤖","서빙로봇"],["📦","장비렌탈"]]},
+{title:"오픈 준비",desc:"운영을 시작하기 전",items:[["👥","직원채용"],["📣","오픈홍보"],["🚚","배달앱"],["📍","매장등록"],["📸","사진촬영"],["📢","마케팅"],["⚖️","세무·노무"],["✅","오픈점검"]]}
+];
+const root=document.getElementById("sections"),search=document.getElementById("search"),dialog=document.getElementById("dialog");
+function render(){root.replaceChildren();let found=false;const q=search.value.trim().toLowerCase();for(const group of sections){const items=group.items.filter(x=>x[1].toLowerCase().includes(q));if(!items.length)continue;found=true;const section=document.createElement("section"),heading=document.createElement("h2"),desc=document.createElement("p"),grid=document.createElement("div");heading.textContent=group.title;desc.className="subtitle";desc.textContent=group.desc;grid.className="grid";for(const [emoji,name] of items){const btn=document.createElement("button"),tile=document.createElement("span"),label=document.createElement("span");btn.className="service";btn.type="button";btn.setAttribute("aria-label",name+" 테스트 화면");tile.className="tile";tile.textContent=emoji;label.className="name";label.textContent=name;btn.append(tile,label);btn.addEventListener("click",()=>{document.getElementById("detailTitle").textContent=name;dialog.classList.add("open")});grid.append(btn)}section.append(heading,desc,grid);root.append(section)}if(!found){const empty=document.createElement("p");empty.textContent="검색 결과가 없습니다.";root.append(empty)}}
+search.addEventListener("input",render);document.getElementById("close").addEventListener("click",()=>dialog.classList.remove("open"));dialog.addEventListener("click",e=>{if(e.target===dialog)dialog.classList.remove("open")});document.addEventListener("keydown",e=>{if(e.key==="Escape")dialog.classList.remove("open")});render();
+</script></body></html>
