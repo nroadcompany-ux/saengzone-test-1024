@@ -23,10 +23,11 @@ nav button{background:none;border:0;color:#7b899c;font-size:11px;display:flex;fl
 .sheet{width:100%;max-width:450px;background:white;padding:25px;border-radius:24px 24px 0 0}.sheet p{font-size:14px;color:#66748a;margin:14px 0}
 .sheet button{width:100%;background:#246ebc;color:white;border:0;border-radius:10px;padding:13px;font-weight:700}
 @media(min-width:750px){.app{margin:24px auto;border-radius:23px;box-shadow:0 15px 65px #15355815;min-height:calc(100vh - 48px)}nav{bottom:24px}}
-</style>
+.switch{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:18px}.switch button{padding:12px 4px;border:1px solid #dce5ef;border-radius:12px;background:#f4f6f9;color:#697b91;font-weight:700;cursor:pointer}.switch button.active{background:#276fba;color:white;border-color:#276fba}</style>
 </head><body>
 <main class="app">
-<header><div class="brand">🌱 생ZONE</div><span class="test">생ZONE - TEST 1024</span></header>
+<header><div class="brand">🌱 생ZONE</div><span class="test">TEST 1024</span></header>
+<div class="switch"><button id="app1" class="active">생ZONE 1 · 창업</button><button id="app2">생ZONE 2 · 운영</button></div>
 <div class="hero"><h1>내 가게를 준비해 볼까요?</h1><p>필요한 창업 서비스를 바로 찾아보세요.</p><input id="search" class="search" type="search" placeholder="창업아이템, 자금, 인테리어 검색" aria-label="서비스 검색"/></div>
 <div class="notice">테스트 버전입니다. 실제 상담·신청·고객 데이터·결제에는 연결되지 않습니다.</div>
 <div id="sections"></div>
@@ -34,13 +35,19 @@ nav button{background:none;border:0;color:#7b899c;font-size:11px;display:flex;fl
 <nav aria-label="하단 메뉴"><button><b>⌂</b>홈</button><button><b>▤</b>로드맵</button><button><b>◷</b>투데이</button><button><b>◇</b>혜택</button><button><b>♧</b>커뮤니티</button></nav>
 <div id="dialog" class="dialog" role="dialog" aria-modal="true" aria-labelledby="detailTitle"><div class="sheet"><strong id="detailTitle"></strong><p>생ZONE - TEST 1024 검토 화면입니다. 서비스별 실제 URL 및 업무 연계는 승인되지 않았습니다.</p><button id="close">닫기</button></div></div>
 <script>
-const sections=[
-{title:"시작하기",desc:"아이디어부터 창업 계획까지",items:[["💡","창업아이템"],["💰","창업자금"],["🧮","창업예산"],["🏛️","정부지원"],["📈","상권분석"],["🏢","상가·부동산"],["📄","사업자등록"],["🎓","창업교육"]]},
-{title:"매장 만들기",desc:"공간과 시설 준비",items:[["🎨","인테리어"],["📑","비교견적"],["🪧","간판"],["🍳","주방설비"],["🪑","가구·집기"],["💧","정수기"],["🛡️","인허가"],["🛠️","시설·공사"]]},
-{title:"매장 장비",desc:"주문·결제·통신",items:[["🖥️","포스기"],["📱","테이블오더"],["📶","인터넷"],["📹","CCTV"],["💳","카드단말기"],["🧾","키오스크"],["🤖","서빙로봇"],["📦","장비렌탈"]]},
-{title:"오픈 준비",desc:"운영을 시작하기 전",items:[["👥","직원채용"],["📣","오픈홍보"],["🚚","배달앱"],["📍","매장등록"],["📸","사진촬영"],["📢","마케팅"],["⚖️","세무·노무"],["✅","오픈점검"]]}
-];
+const sectionsByApp={
+1:[
+{title:"시작하기",desc:"창업의 첫 걸음",items:[["💡","창업아이템"],["💰","창업자금"],["🧮","창업예산"],["🏛️","정부지원"],["📈","상권분석"],["🏢","부동산"],["📄","사업자등록"],["🎓","창업학교"]]},
+{title:"매장 만들기",desc:"공간과 시설 준비",items:[["🎨","인테리어"],["📑","비교견적"],["🪧","간판"],["🍳","주방설비"],["🪑","가구·집기"],["💧","정수기"],["🛡️","인허가"],["🛠️","시설공사"]]},
+{title:"장비 들이기",desc:"주문·결제·통신",items:[["🖥️","포스기"],["📱","테이블오더"],["📶","인터넷"],["📹","CCTV"],["💳","카드단말기"],["🧾","키오스크"],["🤖","서빙로봇"],["📦","장비렌탈"]]},
+{title:"문 열기",desc:"오픈 전 마지막 준비",items:[["👥","직원채용"],["📣","오픈홍보"],["🚚","배달앱"],["📍","매장등록"],["📸","사진촬영"],["📢","마케팅"],["⚖️","세무·노무"],["✅","오픈점검"]]}],
+2:[
+{title:"오늘의 가게",desc:"매일 확인하는 운영 업무",items:[["🗓️","오늘 할 일"],["💵","오늘 매출"],["📅","일정"],["🕒","출퇴근"],["✅","마감"],["📝","운영기록"],["🔔","알림"],["🏪","내 가게"]]},
+{title:"매출·장부",desc:"돈의 흐름 살펴보기",items:[["📊","매출분석"],["🧾","지출관리"],["📈","손익분석"],["💰","현금흐름"],["💳","정산"],["📋","세금"],["🏦","사업자금"],["🧮","계산기"]]},
+{title:"손님·마케팅",desc:"재방문과 매출 늘리기",items:[["👥","고객관리"],["🎁","페이포인트"],["⭐","리뷰관리"],["📢","홍보"],["🛵","배달앱"],["🎟️","쿠폰"],["📸","메뉴촬영"],["📍","매장노출"]]},
+{title:"가게·도움",desc:"운영 문제를 해결하기",items:[["👔","직원관리"],["🧰","장비관리"],["📦","소모품"],["🧾","계약"],["⚖️","세무·노무"],["🤝","전문가"],["🛟","위기대응"],["🔄","양도·재기"]]}]};
+let app=1;const sections=sectionsByApp[app];
 const root=document.getElementById("sections"),search=document.getElementById("search"),dialog=document.getElementById("dialog");
-function render(){root.replaceChildren();let found=false;const q=search.value.trim().toLowerCase();for(const group of sections){const items=group.items.filter(x=>x[1].toLowerCase().includes(q));if(!items.length)continue;found=true;const section=document.createElement("section"),heading=document.createElement("h2"),desc=document.createElement("p"),grid=document.createElement("div");heading.textContent=group.title;desc.className="subtitle";desc.textContent=group.desc;grid.className="grid";for(const [emoji,name] of items){const btn=document.createElement("button"),tile=document.createElement("span"),label=document.createElement("span");btn.className="service";btn.type="button";btn.setAttribute("aria-label",name+" 테스트 화면");tile.className="tile";tile.textContent=emoji;label.className="name";label.textContent=name;btn.append(tile,label);btn.addEventListener("click",()=>{document.getElementById("detailTitle").textContent=name;dialog.classList.add("open")});grid.append(btn)}section.append(heading,desc,grid);root.append(section)}if(!found){const empty=document.createElement("p");empty.textContent="검색 결과가 없습니다.";root.append(empty)}}
-search.addEventListener("input",render);document.getElementById("close").addEventListener("click",()=>dialog.classList.remove("open"));dialog.addEventListener("click",e=>{if(e.target===dialog)dialog.classList.remove("open")});document.addEventListener("keydown",e=>{if(e.key==="Escape")dialog.classList.remove("open")});render();
+function render(){root.replaceChildren();let found=false;const q=search.value.trim().toLowerCase();for(const group of sectionsByApp[app]){const items=group.items.filter(x=>x[1].toLowerCase().includes(q));if(!items.length)continue;found=true;const section=document.createElement("section"),heading=document.createElement("h2"),desc=document.createElement("p"),grid=document.createElement("div");heading.textContent=group.title;desc.className="subtitle";desc.textContent=group.desc;grid.className="grid";for(const [emoji,name] of items){const btn=document.createElement("button"),tile=document.createElement("span"),label=document.createElement("span");btn.className="service";btn.type="button";btn.setAttribute("aria-label",name+" 테스트 화면");tile.className="tile";tile.textContent=emoji;label.className="name";label.textContent=name;btn.append(tile,label);btn.addEventListener("click",()=>{document.getElementById("detailTitle").textContent=name;dialog.classList.add("open")});grid.append(btn)}section.append(heading,desc,grid);root.append(section)}if(!found){const empty=document.createElement("p");empty.textContent="검색 결과가 없습니다.";root.append(empty)}}
+document.getElementById("app1").addEventListener("click",()=>switchApp(1));document.getElementById("app2").addEventListener("click",()=>switchApp(2));function switchApp(n){app=n;search.value="";document.getElementById("app1").classList.toggle("active",n===1);document.getElementById("app2").classList.toggle("active",n===2);document.querySelector(".hero h1").textContent=n===1?"내 가게를 준비해 볼까요?":"오늘도 가게를 잘 운영해 볼까요?";document.querySelector(".hero p").textContent=n===1?"필요한 창업 서비스를 바로 찾아보세요.":"운영에 필요한 서비스를 바로 찾아보세요.";document.querySelector(".hero input").placeholder=n===1?"아이템, 자금, 인테리어 검색":"매출, 장부, 고객관리 검색";const labels=n===1?["홈","로드맵","투데이","혜택","커뮤니티"]:["오늘","장부","달력","가게","도움"];document.querySelectorAll("nav button").forEach((b,i)=>b.lastChild.textContent=labels[i]);render()}search.addEventListener("input",render);document.getElementById("close").addEventListener("click",()=>dialog.classList.remove("open"));dialog.addEventListener("click",e=>{if(e.target===dialog)dialog.classList.remove("open")});document.addEventListener("keydown",e=>{if(e.key==="Escape")dialog.classList.remove("open")});render();
 </script></body></html>
